@@ -1,4 +1,4 @@
-const Project = (Project) => {
+export const Project = (project) => {
 
-    return {Project};
+    return {project};
 };

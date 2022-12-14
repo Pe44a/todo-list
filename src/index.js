@@ -1,0 +1,1 @@
+import {pageLoad} from '/src/pageLoad.js';
