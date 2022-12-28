@@ -3,27 +3,27 @@ export const taskPopUp = ((e) => {
     const removeButtonPopUpTask = document.querySelector('#remove-form-button');
     const form = document.querySelector('.task-form');
 
-    
+    // Displays form
     const addForm = () => {
         form.classList.remove('hidden')
     };
 
-
+    // Removes form
     const removeForm = () => {
         form.classList.add('hidden')
     };
 
+
+    // Events
     popUpTaskButton.addEventListener('click', function (e) {
         e.preventDefault()
         addForm();
-        console.log('hello');
     });
 
     removeButtonPopUpTask.addEventListener('click', function (e) {
         e.preventDefault();
         removeForm();
         form.reset();
-        console.log('hello');
     });
 
 

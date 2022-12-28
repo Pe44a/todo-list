@@ -24,22 +24,22 @@ export const pageLoad = (() => {
 
             <div>
                 <label for="title"></label>
-                    <input type="text" name="title" id="title"  class="input" placeholder="Title">
+                    <input type="text" name="title" id="task-title"  class="input" placeholder="Title">
             </div>
 
             <div>
                 <label for="description"></label>
-                    <textarea name="description" id="description" class="input" cols="21" rows="10" placeholder="Description"></textarea>
+                    <textarea name="description" id="task-description" class="input" cols="21" rows="10" placeholder="Description"></textarea>
             </div>
 
             <div>
                 <label for="dueDate">Due Date:</label>
-                <input type="date" name="dueDate" id="dueDate" class="input">
+                <input type="date" name="dueDate" id="task-dueDate" class="input">
             </div>
 
             <div>
                 <label for="priority">Priority: </label>
-                <select name="priority" id="priority" class="input">
+                <select name="priority" id="task-priority" class="input">
                     <option value="low">Low</option>
                     <option value="medium">Medium</option>
                     <option value="high">High</option>
