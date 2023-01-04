@@ -33,9 +33,10 @@
     color: rgb(125, 125, 154);
 }
 
-.task {
+.tasks {
     display: flex;
     background-color: rgb(86 88 161);
+    flex-direction: column;
 }
 
 /* projects */
@@ -56,6 +57,29 @@
 .project {
     font-size: 25px;
     color: rgb(195 195 199);
+}
+
+/* tasks */
+
+.task-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 60vw;
+    margin: 6px;
+    padding: 20px;
+    background-color: rgb(186 211 255);
+    border-radius: 5px;
+}
+
+.task-div {
+    display: flex;
+    gap: 10px;
+    font-size: 20px;
+}
+
+.task-div>p {
+    margin: 0;
 }
 
 
@@ -141,3 +165,20 @@ a:hover {
 #pop-up-task-form:active {
     color: rgb(86 88 161);
 }
+
+.edit-button,
+.delete-button {
+    color: black;
+}
+
+/* checkbox */
+
+input[type='checkbox'] { 
+    font-size: 15px;
+    font-weight: bold;
+    display: grid;
+    grid-template-columns: 1em auto;
+    gap: 0.5em;
+
+}
+
