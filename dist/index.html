@@ -14,7 +14,7 @@
         <div class="header">To-do</div>
         <div class="sidebar">
             <a href="" class="project-name" id="general">#General</a>
-            <div class="project-name">#Projects</div>
+            <div class="project-name">#Projects <a href="" id="pop-up-project-form">+</a></div>
                 <div class="projects">
                     <a href="" class="project">Default</a>
                 </div>
@@ -23,26 +23,26 @@
         <button id="pop-up-task-form">+</button>
 
 
-        <!--Form-->
+        <!--Forms-->
         <form class="task-form hidden" action="" method="get">
             <div class="form-headline-container">
                 <legend class="form-headline">Add task</legend>
-                <button id="remove-form-button">x</button>
+                <button id="remove-task-form-button">x</button>
             </div> 
 
             <div>
                 <label for="title"></label>
-                    <input type="text" name="title" id="task-title"  class="input" placeholder="Title">
+                    <input type="text" name="title" id="task-title"  class="input" placeholder="Title" required>
             </div>
 
             <div>
                 <label for="description"></label>
-                    <textarea name="description" id="task-description" class="input" cols="21" rows="10" placeholder="Description"></textarea>
+                    <textarea name="description" id="task-description" class="input" cols="21" rows="10" placeholder="Description" required></textarea>
             </div>
 
             <div>
                 <label for="dueDate">Due Date:</label>
-                <input type="date" name="dueDate" id="task-dueDate" class="input">
+                <input type="date" name="dueDate" id="task-dueDate" class="input" required>
             </div>
 
             <div>
@@ -54,7 +54,22 @@
                 </select>
             
             
-                <input type="submit" value="Submit" id="submit-task">
+                <input type="submit" value="Submit" class="submit">
+            </div>
+        </form>
+
+
+
+        <form class="project-form hidden" action="" method="get">
+            <div class="form-headline-container">
+                <legend>Add project</legend>
+                <button id="remove-project-form-button">x</button>
+            </div>
+
+            <div>
+                <label for="project"></label>
+                <input type="text" name="project" id="project" class="input" placeholder="Project" required>
+                <input type="submit" value="submit" class="submit">
             </div>
         </form>
            

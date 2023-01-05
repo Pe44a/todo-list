@@ -1,14 +1,16 @@
 import {Task} from '/src/task.js'; 
 import {saveTask, getTasks} from '/src/localeStorage.js';
-import {taskPopUp} from '/src/domManipulations.js';
+import {popUp} from '/src/domManipulations.js';
 import {renderTasks} from '/src/render.js';
 
-    const createTaskEvent = (()=> {
+    const taskSubmitEvent = (()=> {
         const submitTask = document.querySelector('form.task-form');
 
 
         submitTask.addEventListener('submit', function(e) {
             e.preventDefault();
+
+            const form = document.querySelector('.task-form');
 
             const title = document.querySelector('#task-title').value;
             const description = document.querySelector('#task-description').value;
@@ -20,27 +22,46 @@ import {renderTasks} from '/src/render.js';
 
             
             saveTask(task);
-            taskPopUp.removeForm(); 
+            popUp.removeForm(form); 
             });
         })();
 
 
     const taskPopUpEvent = (() => {
         const popUpTaskButton = document.querySelector('#pop-up-task-form');
-        const removeButtonPopUpTask = document.querySelector('#remove-form-button');
+        const removeButtonPopUpTask = document.querySelector('#remove-task-form-button');
         const form = document.querySelector('.task-form');
     
 
         popUpTaskButton.addEventListener('click', function (e) {
             e.preventDefault()
-            taskPopUp.addForm();
+            popUp.addForm(form);
         });
     
         removeButtonPopUpTask.addEventListener('click', function (e) {
             e.preventDefault();
-            taskPopUp.removeForm();
+            popUp.removeForm(form);
         });
     
+    })();
+
+
+    const projectPopUpEvent = (() => {
+        const popUpProjectButton = document.querySelector('#pop-up-project-form');
+        const closeProjectButton = document.querySelector('#remove-project-form-button');            
+        const form = document.querySelector('.project-form');
+
+        popUpProjectButton.addEventListener('click', function(e) {
+            e.preventDefault()
+            popUp.addForm(form);
+        });
+
+        closeProjectButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            popUp.removeForm(form);
+        });
+
+
     })();
 
     const renderGeneral = (() => {
@@ -52,4 +73,4 @@ import {renderTasks} from '/src/render.js';
         });
     })();
 
-export {createTaskEvent, taskPopUpEvent};
+export {taskSubmitEvent, taskPopUpEvent};

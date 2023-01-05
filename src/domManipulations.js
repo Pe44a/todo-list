@@ -1,13 +1,13 @@
-    const taskPopUp = (() => {
-        const form = document.querySelector('.task-form');
+    const popUp = (() => {
+        
 
         // Displays form
-        const addForm = () => {
+        const addForm = (form) => {
             form.classList.remove('hidden');
         };
 
         // Removes form
-        const removeForm = () => {
+        const removeForm = (form) => {
             form.classList.add('hidden');
             form.reset();
         };
@@ -16,5 +16,4 @@
     })();
 
 
-
-export {taskPopUp};
+export {popUp};
