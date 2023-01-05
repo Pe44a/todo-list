@@ -26,9 +26,8 @@
 .sidebar {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
     gap: 15px;
-    padding: 30px 65px 0 0;
+    padding: 30px 10px 0 65px;
     background-color: rgb(14 49 92);
     color: rgb(125, 125, 154);
 }
@@ -42,6 +41,7 @@
 /* projects */
 
 .project-name {
+    display: flex;
     font-size: 45px;
     color: rgb(195 195 199);
 }
@@ -83,16 +83,16 @@
 }
 
 
+/* forms */
 
-/* form */
 
+/* task form */
 .task-form {
     display: flex;
     flex-direction: column;
     position:fixed;
     top: 40%;
     left: 40%;
-    background-color: white;
     gap: 15px;
     padding: 20px;
     font-size: 22px;
@@ -108,7 +108,7 @@
     font-size: 30px;
 }
 
-#remove-form-button {
+#remove-task-form-button {
     width: 32px;
     height: 32px;
     border: 2px solid;
@@ -125,12 +125,34 @@
     border-radius: 5px;
 }
 
-#submit-task {
+.submit {
     width: 100px;
     padding: 3px;
     border: solid 3px;
     border-radius: 5px;
 }
+
+/* project form */
+
+.project-form {
+    display: flex;
+    flex-direction: column;
+    position:fixed;
+    top: 40%;
+    left: 40%;
+    gap: 15px;
+    padding: 20px;
+    font-size: 22px;
+    background-color: rgb(202 204 241);
+}
+
+#remove-project-form-button {
+    width: 32px;
+    height: 32px;
+    border: 2px solid;
+    border-radius: 5px;
+}
+
 
 /* link */
 
@@ -139,6 +161,15 @@ a {
 }
 
 a:hover {
+    color: white;
+}
+
+#pop-up-project-form {
+    color: #c3c3c7;
+    padding-left: 15px;
+}
+
+#pop-up-project-form:hover {
     color: white;
 }
 
