@@ -119,6 +119,14 @@
     height: 100px;
 }
 
+#task-priority {
+    width: 220px;
+}
+
+#project-name {
+    width: 220px;
+}
+
 .input {
     border: solid 2px;
     padding: 3px;

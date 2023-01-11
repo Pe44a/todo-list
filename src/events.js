@@ -1,7 +1,10 @@
-import {Task} from '/src/task.js'; 
-import {saveTask, getTasks} from '/src/localeStorage.js';
+import {Task} from '/src/task.js';
+import {Project} from '/src/project.js'; 
+import {saveTask, getTasks, saveProject, getProjects, saveTaskIndex} from '/src/localeStorage.js';
 import {popUp} from '/src/domManipulations.js';
-import {renderTasks} from '/src/render.js';
+import {renderTasks, renderProjects, renderProjectsSelection} from '/src/render.js';
+
+
 
     const taskSubmitEvent = (()=> {
         const submitTask = document.querySelector('form.task-form');
@@ -9,6 +12,7 @@ import {renderTasks} from '/src/render.js';
 
         submitTask.addEventListener('submit', function(e) {
             e.preventDefault();
+            console.log('hello');
 
             const form = document.querySelector('.task-form');
 
@@ -16,16 +20,48 @@ import {renderTasks} from '/src/render.js';
             const description = document.querySelector('#task-description').value;
             const dueDate = document.querySelector('#task-dueDate').value;
             const priority = document.querySelector('#task-priority').value;
+            const project = document.querySelector('#project-name');
+            const selectedOption = project.options[project.selectedIndex];
 
             // Creates task
             const task = Task(title, description, dueDate, priority);
-
-            
             saveTask(task);
+
+            if (selectedOption.hasAttribute('data-project-index')) {
+                
+                const optionProjectIndex = selectedOption.dataset.projectIndex;
+
+                saveTaskIndex(optionProjectIndex);
+            }
+
             popUp.removeForm(form); 
             });
         })();
 
+
+    const projectSubmitEvent = (()=> {
+        const submitProject = document.querySelector('form.project-form');
+
+
+        submitProject.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const form = document.querySelector('.project-form');
+
+            const projectValue = document.querySelector('#project').value;
+
+
+            // Creates task
+            const project = Project(projectValue);
+
+            
+            saveProject(project);
+            popUp.removeForm(form); 
+            renderProjects(getProjects());
+            });
+        })();
+
+        
 
     const taskPopUpEvent = (() => {
         const popUpTaskButton = document.querySelector('#pop-up-task-form');
@@ -36,6 +72,7 @@ import {renderTasks} from '/src/render.js';
         popUpTaskButton.addEventListener('click', function (e) {
             e.preventDefault()
             popUp.addForm(form);
+            renderProjectsSelection(getProjects());
         });
     
         removeButtonPopUpTask.addEventListener('click', function (e) {
