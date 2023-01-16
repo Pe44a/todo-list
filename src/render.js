@@ -1,4 +1,6 @@
 import {clearTasks} from './domManipulations.js';
+import {getTasks, getProjects} from '/src/localeStorage.js';
+const _ = require('lodash');
 
     const renderTasks = (tasks) => {
         const tasksDiv = document.querySelector('.tasks');
@@ -19,20 +21,50 @@ import {clearTasks} from './domManipulations.js';
         });
     };
 
+
     const renderProjects = (projects) => {
         const projectsDiv = document.querySelector('.projects');
 
         //Clears .projects before renders
         projectsDiv.innerHTML = '';
 
-        projects.projects.forEach( project => {
+        projects.projects.forEach( (project, index) => {
             const projectLink = document.createElement('a');
             projectLink.href = '';
+
             projectLink.classList.add('project');
             projectLink.innerHTML = `${project.project}`;
+            projectLink.dataset.projectIndex = index;
 
             projectsDiv.appendChild(projectLink);
         });
+    };
+
+
+    const renderProjectTasks = (projectIndex) => {
+        const tasksDiv = document.querySelector('.tasks');
+
+        //Clears .tasks before renders
+        tasksDiv.innerHTML = '';
+        
+        
+        const projects = getProjects();
+        const project = projects.projects.find((object, index) =>  (index === Number(projectIndex)) ?
+        object : undefined);
+
+        const tasks = getTasks();
+
+        project.tasksIndex.forEach(taskIndex => {
+            
+            console.log(taskIndex);
+
+            const projectTasks = tasks.tasks.find((project, index) => (index === taskIndex) ?
+              project : undefined);
+
+              let convertedProjectTasks = _.set({}, 'tasks[0]', projectTasks);
+
+              renderTasks(convertedProjectTasks);
+        });   
     };
     
 
@@ -58,4 +90,4 @@ import {clearTasks} from './domManipulations.js';
     };
 
 
-export {renderTasks, renderProjects, renderProjectsSelection};
+export {renderTasks, renderProjects, renderProjectsSelection, renderProjectTasks};

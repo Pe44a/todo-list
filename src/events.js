@@ -2,7 +2,7 @@ import {Task} from '/src/task.js';
 import {Project} from '/src/project.js'; 
 import {saveTask, getTasks, saveProject, getProjects, saveTaskIndex} from '/src/localeStorage.js';
 import {popUp} from '/src/domManipulations.js';
-import {renderTasks, renderProjects, renderProjectsSelection} from '/src/render.js';
+import {renderTasks, renderProjects, renderProjectsSelection, renderProjectTasks} from '/src/render.js';
 
 
 
@@ -12,7 +12,6 @@ import {renderTasks, renderProjects, renderProjectsSelection} from '/src/render.
 
         submitTask.addEventListener('submit', function(e) {
             e.preventDefault();
-            console.log('hello');
 
             const form = document.querySelector('.task-form');
 
@@ -37,6 +36,7 @@ import {renderTasks, renderProjects, renderProjectsSelection} from '/src/render.
             popUp.removeForm(form); 
             });
         })();
+
 
 
     const projectSubmitEvent = (()=> {
@@ -79,7 +79,6 @@ import {renderTasks, renderProjects, renderProjectsSelection} from '/src/render.
             e.preventDefault();
             popUp.removeForm(form);
         });
-    
     })();
 
 
@@ -97,8 +96,24 @@ import {renderTasks, renderProjects, renderProjectsSelection} from '/src/render.
             e.preventDefault();
             popUp.removeForm(form);
         });
+    })();
 
 
+    const renderProjectTasksEvent = (() => {
+
+        const projects = document.querySelectorAll('.projects');
+
+        const tasks = getTasks();
+
+        projects.forEach((project)=> {
+            project.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                const projectIndex = e.target.dataset.projectIndex;
+
+                renderProjectTasks(projectIndex);
+            });
+        });
     })();
 
     const renderGeneral = (() => {

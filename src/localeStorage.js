@@ -43,7 +43,7 @@
         const tasks = getTasks();
         const projects = getProjects();
 
-        projects.projects[index].tasksIndex.push(tasks.tasks.length);      
+        projects.projects[index].tasksIndex.push(tasks.tasks.length -1);      
 
         localStorage.setItem('projects', JSON.stringify(projects.projects));
     };
