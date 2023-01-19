@@ -8,11 +8,12 @@ const _ = require('lodash');
         //Clears .tasks before renders
         tasksDiv.innerHTML = '';
 
-        tasks.tasks.forEach(task => {
+        tasks.tasks.forEach((task, index) => {
             
 
             const taskDiv = document.createElement('div');
             taskDiv.classList.add('task-container');
+            taskDiv.dataset.tasksIndex = index;
             taskDiv.innerHTML = `        
             <div class="task-div checkbox-wrapper"> <input type="checkbox"> <p>${task.tittle}</p> <p>${task.dueDate}</p> </div>
             <div class="task-div"> <a href="" class="edit-button">Edit</a> <a href="" class="delete-button">Delete</a> </div>
@@ -46,25 +47,41 @@ const _ = require('lodash');
 
         //Clears .tasks before renders
         tasksDiv.innerHTML = '';
-        
-        
+
+
         const projects = getProjects();
         const project = projects.projects.find((object, index) =>  (index === Number(projectIndex)) ?
         object : undefined);
 
         const tasks = getTasks();
 
+        const projectTaskIndexes = [];
         project.tasksIndex.forEach(taskIndex => {
+            tasks.tasks.forEach((task, index) => {
+                if (index === taskIndex) {
+                    projectTaskIndexes.push(index);
+                }
+            });
+        });
+
+
+        // Renders if projectTaskIndexes is equal to one of the tasks in 'tasks'
+        projectTaskIndexes.forEach( taskIndex => {
+            tasks.tasks.forEach((task, index) => {
             
-            console.log(taskIndex);
-
-            const projectTasks = tasks.tasks.find((project, index) => (index === taskIndex) ?
-              project : undefined);
-
-              let convertedProjectTasks = _.set({}, 'tasks[0]', projectTasks);
-
-              renderTasks(convertedProjectTasks);
-        });   
+            if(taskIndex === index) {
+                const taskDiv = document.createElement('div');
+                taskDiv.classList.add('task-container');
+                taskDiv.dataset.tasksIndex = index;
+                taskDiv.innerHTML = `        
+                <div class="task-div checkbox-wrapper"> <input type="checkbox"> <p>${task.tittle}</p> <p>${task.dueDate}</p> </div>
+                <div class="task-div"> <a href="" class="edit-button">Edit</a> <a href="" class="delete-button">Delete</a> </div>
+                `;
+                tasksDiv.appendChild(taskDiv);
+            };
+            
+        });
+    });   
     };
     
 

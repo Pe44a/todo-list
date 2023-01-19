@@ -48,4 +48,8 @@
         localStorage.setItem('projects', JSON.stringify(projects.projects));
     };
 
+    // const getTaskIndex = () => {
+
+    // };
+
 export {saveTask, getTasks, saveProject, getProjects, saveTaskIndex};
