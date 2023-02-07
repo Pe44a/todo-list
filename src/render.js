@@ -1,5 +1,6 @@
 import {clearTasks} from './domManipulations.js';
 import {getTasks, getProjects} from '/src/localeStorage.js';
+import {deleteTaskEvent} from '/src/events.js';
 const _ = require('lodash');
 
     const renderTasks = (tasks) => {
@@ -8,6 +9,8 @@ const _ = require('lodash');
         //Clears .tasks before renders
         tasksDiv.innerHTML = '';
 
+        console.log(tasks);
+        if(tasks !== undefined){
         tasks.tasks.forEach(task => {
             
 
@@ -15,10 +18,12 @@ const _ = require('lodash');
             taskDiv.classList.add('task-container');
             taskDiv.innerHTML = `        
             <div class="task-div checkbox-wrapper"> <input type="checkbox"> <p>${task.tittle}</p> <p>${task.dueDate}</p> </div>
-            <div class="task-div"> <a href="" class="edit-button">Edit</a> <a href="" class="delete-button">Delete</a> </div>
+            <div class="task-div"> <button href="" class="edit-button">Edit</button> <button href="" class="delete-button">Delete</button> </div>
             `;
             tasksDiv.appendChild(taskDiv);
         });
+        }
+        deleteTaskEvent();
     };
 
 
@@ -28,16 +33,20 @@ const _ = require('lodash');
         //Clears .projects before renders
         projectsDiv.innerHTML = '';
 
-        projects.projects.forEach( (project, index) => {
-            const projectLink = document.createElement('a');
-            projectLink.href = '';
+        console.log(projects);
+        // Renders only if there's actually what to render 
+        if(projects.projects.length > 0){
+            projects.projects.forEach( (project, index) => {
+                const projectLink = document.createElement('a');
+                projectLink.href = '';
 
-            projectLink.classList.add('project');
-            projectLink.innerHTML = `${project.project}`;
-            projectLink.dataset.projectIndex = index;
+                projectLink.classList.add('project');
+                projectLink.innerHTML = `${project.project}`;
+                projectLink.dataset.projectIndex = index;
 
-            projectsDiv.appendChild(projectLink);
-        });
+                projectsDiv.appendChild(projectLink);
+            });
+        }   
     };
 
 
@@ -46,25 +55,46 @@ const _ = require('lodash');
 
         //Clears .tasks before renders
         tasksDiv.innerHTML = '';
-        
-        
+
         const projects = getProjects();
+        const tasks = getTasks();
+        const projectTaskIndexes = [];
+
+
+        if(projects.projects.length > 0) {
+            
         const project = projects.projects.find((object, index) =>  (index === Number(projectIndex)) ?
         object : undefined);
 
-        const tasks = getTasks();
-
+     
         project.tasksIndex.forEach(taskIndex => {
+            tasks.tasks.forEach((task, index) => {
+                if (index === taskIndex) {
+                    projectTaskIndexes.push(index);
+                }
+            });
+        });
+    }
+
+        // Renders if projectTaskIndexes is equal to one of the tasks in 'tasks'
+        projectTaskIndexes.forEach( taskIndex => {
+            tasks.tasks.forEach((task, index) => {
             
-            console.log(taskIndex);
+            if(taskIndex === index) {
+                const taskDiv = document.createElement('div');
+                taskDiv.classList.add('task-container');
+                taskDiv.dataset.tasksIndex = index;
+                taskDiv.innerHTML = `        
+                <div class="task-div checkbox-wrapper"> <input type="checkbox"> <p>${task.tittle}</p> <p>${task.dueDate}</p> </div>
+                <div class="task-div"> <button href="" class="edit-button">Edit</button> <button href="" class="delete-button">Delete</button> </div>
+                `;
+                tasksDiv.appendChild(taskDiv);
+            };
+            
+        });
+    });   
 
-            const projectTasks = tasks.tasks.find((project, index) => (index === taskIndex) ?
-              project : undefined);
-
-              let convertedProjectTasks = _.set({}, 'tasks[0]', projectTasks);
-
-              renderTasks(convertedProjectTasks);
-        });   
+    deleteTaskEvent();
     };
     
 
@@ -80,13 +110,15 @@ const _ = require('lodash');
         defaultSelection.innerHTML = 'General';
         projectsSelections.appendChild(defaultSelection);
 
-
+        
+        if(projects.projects.length > 0){
         projects.projects.forEach( (project, index) => {
             const projectSelection = document.createElement('option');
             projectSelection.innerHTML = `${project.project}`;
             projectSelection.dataset.projectIndex = index;
             projectsSelections.appendChild(projectSelection);
         });
+      }
     };
 
 

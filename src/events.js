@@ -1,8 +1,11 @@
 import {Task} from '/src/task.js';
 import {Project} from '/src/project.js'; 
-import {saveTask, getTasks, saveProject, getProjects, saveTaskIndex} from '/src/localeStorage.js';
+import {saveTask, getTasks, saveProject, getProjects, saveTaskIndex, deleteTask} from '/src/localeStorage.js';
 import {popUp} from '/src/domManipulations.js';
 import {renderTasks, renderProjects, renderProjectsSelection, renderProjectTasks} from '/src/render.js';
+import { last } from 'lodash';
+
+let lastRenderEvent;
 
 
 
@@ -111,18 +114,48 @@ import {renderTasks, renderProjects, renderProjectsSelection, renderProjectTasks
 
                 const projectIndex = e.target.dataset.projectIndex;
 
+
                 renderProjectTasks(projectIndex);
+                // lastRenderEvent = renderProjectTasks(`${projectIndex}`);
+                // console.log(lastRenderEvent);
             });
         });
     })();
+
 
     const renderGeneral = (() => {
         const general = document.querySelector('#general');
 
         general.addEventListener('click', function(e) {
             e.preventDefault();
+
             renderTasks(getTasks());
-        });
+            // lastRenderEvent = renderGeneral;
+            // console.log(typeof(lastRenderEvent));
+        }); 
     })();
 
-export {taskSubmitEvent, taskPopUpEvent};
+
+    const deleteTaskEvent = () => {
+
+
+        let deleteButtons = document.querySelectorAll('.delete-button');
+       
+
+        deleteButtons.forEach((deleteButton) => {
+            deleteButton.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                
+                const tasksIndex = e.target.parentNode.parentNode.dataset.tasksIndex;
+                deleteTask(tasksIndex);
+
+                // lastRenderEvent();
+            });
+        });
+    };
+
+
+
+
+export {taskSubmitEvent, taskPopUpEvent, deleteTaskEvent};
