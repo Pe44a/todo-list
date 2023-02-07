@@ -16,6 +16,7 @@ const _ = require('lodash');
 
             const taskDiv = document.createElement('div');
             taskDiv.classList.add('task-container');
+            taskDiv.dataset.tasksIndex = index;
             taskDiv.innerHTML = `        
             <div class="task-div checkbox-wrapper"> <input type="checkbox"> <p>${task.tittle}</p> <p>${task.dueDate}</p> </div>
             <div class="task-div"> <button href="" class="edit-button">Edit</button> <button href="" class="delete-button">Delete</button> </div>

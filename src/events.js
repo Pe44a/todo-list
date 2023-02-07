@@ -106,8 +106,6 @@ let lastRenderEvent;
 
         const projects = document.querySelectorAll('.projects');
 
-        const tasks = getTasks();
-
         projects.forEach((project)=> {
             project.addEventListener('click', (e) => {
                 e.preventDefault();

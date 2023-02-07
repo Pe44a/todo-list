@@ -48,28 +48,4 @@
         localStorage.setItem('projects', JSON.stringify(projects.projects));
     };
 
-
-    const deleteTask = (tasksIndex) => {
-        let tasks = getTasks();
-        let projects = getProjects();
-        
-
-        // Removes tasks
-        tasks.tasks.splice(Number(tasksIndex), 1);
-        localStorage.setItem('tasks', JSON.stringify(tasks.tasks));
-        if(tasks.tasks.length === 0){
-            localStorage.removeItem('tasks');
-        }
-
-        // Removes tasksIndex from projects.tasksIndex  
-        projects.projects.forEach((project, projectIndex) => {
-            projects.projects[projectIndex].tasksIndex.forEach((task, taskIndex)  => {
-                task === Number(tasksIndex) ? projects.projects[projectIndex].tasksIndex.splice(taskIndex, 1) : null;
-            });
-        });
-
-
-        localStorage.setItem('projects', JSON.stringify(projects.projects));
-    }
-
-export {saveTask, getTasks, saveProject, getProjects, saveTaskIndex, deleteTask};
+export {saveTask, getTasks, saveProject, getProjects, saveTaskIndex};
