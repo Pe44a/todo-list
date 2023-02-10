@@ -1,4 +1,4 @@
-export const Task = (tittle, description, dueDate, priority) => {
+export const Task = (title, description, dueDate, priority) => {
 
-    return{tittle, description, dueDate, priority};
+    return{title, description, dueDate, priority};
 };

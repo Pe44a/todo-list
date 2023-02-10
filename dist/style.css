@@ -161,6 +161,25 @@
     border-radius: 5px;
 }
 
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    position:fixed;
+    top: 40%;
+    left: 40%;
+    gap: 15px;
+    padding: 20px;
+    font-size: 22px;
+    background-color: rgb(202 204 241);
+}
+
+#remove-edit-form-button {
+    width: 32px;
+    height: 32px;
+    border: 2px solid;
+    border-radius: 5px;
+}
+
 
 /* link */
 

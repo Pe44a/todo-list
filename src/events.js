@@ -2,7 +2,7 @@ import {Task} from '/src/task.js';
 import {Project} from '/src/project.js'; 
 import {saveTask, getTasks, saveProject, getProjects, saveTaskIndex, deleteTask} from '/src/localeStorage.js';
 import {popUp} from '/src/domManipulations.js';
-import {renderTasks, renderProjects, renderProjectsSelection, renderProjectTasks} from '/src/render.js';
+import {renderTasks, renderProjects, renderProjectsSelection, renderProjectTasks, renderEditForm} from '/src/render.js';
 import { last } from 'lodash';
 
 let lastRenderEvent;
@@ -128,8 +128,8 @@ let lastRenderEvent;
             e.preventDefault();
 
             renderTasks(getTasks());
-            // lastRenderEvent = renderGeneral;
-            // console.log(typeof(lastRenderEvent));
+            // lastRenderEvent = renderTasks(getTasks());
+            // console.log(lastRenderEvent);
         }); 
     })();
 
@@ -137,7 +137,7 @@ let lastRenderEvent;
     const deleteTaskEvent = () => {
 
 
-        let deleteButtons = document.querySelectorAll('.delete-button');
+        const deleteButtons = document.querySelectorAll('.delete-button');
        
 
         deleteButtons.forEach((deleteButton) => {
@@ -154,6 +154,60 @@ let lastRenderEvent;
     };
 
 
+    const editTaskPopUpEvent = () => {
+        
+        const editButtons = document.querySelectorAll('.edit-button');
 
 
-export {taskSubmitEvent, taskPopUpEvent, deleteTaskEvent};
+        editButtons.forEach((editButton) => {
+            editButton.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                
+                const tasksIndex = e.target.parentNode.parentNode.dataset.tasksIndex;
+                renderEditForm(tasksIndex);
+
+                // lastRenderEvent();
+            });
+        });        
+    };
+
+    const submitEditFormEvent = () => {
+        const editForm = document.querySelector('.edit-form');
+        const taskIndex = editForm.dataset.taskIndex;
+        const tasks = getTasks();
+
+        editForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(editForm);
+            const data = {};
+
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            tasks.tasks[Number(taskIndex)].title = data.title;
+            tasks.tasks[Number(taskIndex)].description = data.description;
+            tasks.tasks[Number(taskIndex)].dueDate = data.dueDate;
+            tasks.tasks[Number(taskIndex)].priority = data.priority;
+
+            localStorage.setItem('tasks', JSON.stringify(tasks.tasks));
+            editForm.remove();
+        });
+    };
+
+    const closeEditFormEvent = () => {
+        const closeButton = document.querySelector('#remove-edit-form-button');
+
+        closeButton.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            const editForm = document.querySelector('.edit-form');
+
+            editForm.remove();
+        });
+    }
+
+
+export {taskSubmitEvent, taskPopUpEvent, deleteTaskEvent, editTaskPopUpEvent, closeEditFormEvent, submitEditFormEvent};
