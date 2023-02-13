@@ -97,7 +97,7 @@ const _ = require('lodash');
     });   
 
     deleteTaskEvent();
-
+    editTaskPopUpEvent();
     };
     
 

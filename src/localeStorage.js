@@ -74,9 +74,6 @@
         localStorage.setItem('projects', JSON.stringify(projects.projects));
     }
 
-    const editTask = (taskIndex) => {
-        
-    }
  
 
 export {saveTask, getTasks, saveProject, getProjects, saveTaskIndex, deleteTask};

@@ -5,7 +5,9 @@ import {popUp} from '/src/domManipulations.js';
 import {renderTasks, renderProjects, renderProjectsSelection, renderProjectTasks, renderEditForm} from '/src/render.js';
 import { last } from 'lodash';
 
-let lastRenderEvent;
+let lastRenderEvent = function() {
+    renderTasks(getTasks());
+};
 
 
 
@@ -37,7 +39,9 @@ let lastRenderEvent;
             }
 
             popUp.removeForm(form); 
+            lastRenderEvent();
             });
+            
         })();
 
 
@@ -114,8 +118,9 @@ let lastRenderEvent;
 
 
                 renderProjectTasks(projectIndex);
-                // lastRenderEvent = renderProjectTasks(`${projectIndex}`);
-                // console.log(lastRenderEvent);
+                lastRenderEvent = function() {
+                    renderProjectTasks(projectIndex);
+                };
             });
         });
     })();
@@ -128,8 +133,9 @@ let lastRenderEvent;
             e.preventDefault();
 
             renderTasks(getTasks());
-            // lastRenderEvent = renderTasks(getTasks());
-            // console.log(lastRenderEvent);
+            lastRenderEvent = function() {
+                renderTasks(getTasks());
+            };
         }); 
     })();
 
@@ -148,7 +154,7 @@ let lastRenderEvent;
                 const tasksIndex = e.target.parentNode.parentNode.dataset.tasksIndex;
                 deleteTask(tasksIndex);
 
-                // lastRenderEvent();
+                lastRenderEvent();
             });
         });
     };
@@ -166,8 +172,6 @@ let lastRenderEvent;
                 
                 const tasksIndex = e.target.parentNode.parentNode.dataset.tasksIndex;
                 renderEditForm(tasksIndex);
-
-                // lastRenderEvent();
             });
         });        
     };
@@ -194,6 +198,9 @@ let lastRenderEvent;
 
             localStorage.setItem('tasks', JSON.stringify(tasks.tasks));
             editForm.remove();
+
+
+            lastRenderEvent();
         });
     };
 
